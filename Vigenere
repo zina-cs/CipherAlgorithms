@@ -1,0 +1,99 @@
+public static void vEncryption (String Eplaintext, String keyword)
+		{
+			//turn to uppercase
+			String plaintext = Eplaintext.toUpperCase();
+			String key = keyword.toUpperCase();
+			//make vigenere square
+			char [][] square = new char [26][26];
+			int row, column,n,m;
+			int pl = plaintext.length();
+			int kl = key.length();
+			for (row=0, m=0; row<26; m++, row++)
+			{
+				for (column = 0, n=65 + m ; column < 26;n++,column++)
+				{
+					if(n == 91)
+					{
+						n=65;
+					}
+					char A = (char)(n);
+					square[row][column] = A;
+				}
+			}
+			//loop key to extend and use to compare
+			StringBuffer extendedKey = new StringBuffer("");
+			extendedKey.append(key);
+			while (extendedKey.length()<pl)
+			{
+				for (int k = 0; k<kl; k++ )
+				{
+			        char c = key.charAt(k);
+				    extendedKey.append(c);
+				}    
+			}
+			//convert from plaintext to ciphertext
+			char [] ciphertext = new char [pl];
+			for (int i = 0; i < pl; i++)
+			{
+				char lp = plaintext.charAt(i);
+				char lk = extendedKey.charAt(i);
+				int p = ((int)lp - 65);
+				int k = ((int)lk - 65);
+				ciphertext[i] = square [k][p];
+				System.out.print(ciphertext[i]);
+		    }
+
+	}
+    public static void vDecryption (String Eciphertext, String keyword)
+		{
+			//turn to uppercase
+			String ciphertext = Eciphertext.toUpperCase();
+			String key = keyword.toUpperCase();
+			//make vigenere square
+			char [][] square = new char [26][26];
+			int row, column,n,m;
+			int cl = ciphertext.length();
+			int kl = key.length();
+			for (row=0, m=0; row<26; m++, row++)
+			{
+				for (column = 0, n=65 + m ; column < 26;n++,column++)
+				{
+					if(n == 91)
+					{
+						n=65;
+					}
+					char A = (char)(n);
+					square[row][column] = A;
+				}
+			}
+			//loop key to extend and use to compare
+			StringBuffer extendedKey = new StringBuffer("");
+			extendedKey.append(key);
+			while (extendedKey.length()<cl)
+			{
+				for (int k = 0; k<kl; k++ )
+				{
+			        char c = key.charAt(k);
+				    extendedKey.append(c);
+				}    
+			}
+			//convert from ciphertext to plaintext
+			char [] plaintext = new char [cl];
+			for (int i = 0; i < cl; i++)
+			{
+				for (int a = 0; a<26; a++)
+				{
+					row = ((int) extendedKey.charAt(i) - 65);
+					char L = square[row][a];
+					char K = ciphertext.charAt(i);
+					if (K == L)
+					{
+						plaintext[i] = square[0][a];
+						a = 26;
+					}
+				}
+				System.out.print(plaintext[i]);
+		    }
+			
+
+		}
